@@ -1,0 +1,29 @@
+﻿@model AwardsEditVM
+@{
+    ViewData["Title"] = "Update";
+}
+
+
+<div class="container">
+    <h1>Awards</h1>
+    <form asp-controller="awards" asp-action="Update" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="my-4" for="exampleInputUsername1">Title</label>
+            <textarea class="form-control rounded-0" id="title-area" rows="3" asp-for="Title"></textarea>
+            <span class="text-danger my-1" asp-validation-for="Title"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control mybutton" asp-for="Photo">
+            <span class="text-danger" asp-validation-for="Photo"></span>
+        </div>
+        <button type="submit" class="mybutton">Update</button>
+        <a class="mybutton" asp-controller="Awards" asp-action="Index">Back</a>
+    </form>
+
+</div>
+
+@section Scripts{
+    <script src="~/ckeditor/ckeditor.js"></script>
+
+
+}
