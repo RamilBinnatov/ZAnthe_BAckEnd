@@ -2,9 +2,11 @@
 {
     public class RoomListVM
     {
-        public string Img { get; set; }
-        public string Name { get; set; }
+        public string? Img { get; set; }
+        public string? Name { get; set; }
         public int GuestCount { get; set; }
-        public int MyProperty { get; set; }
+        public int Price { get; set; }
+        public int Id { get; set; }
+
     }
 }

@@ -1,0 +1,168 @@
+
+
+.title{
+    background: #f5f3f0;
+    padding: 50px 0;
+}
+
+.title ul li{
+    margin-right: 10px;
+}
+
+.section-1{
+    margin: 80px 0;
+}
+
+.section-1 .top{
+    margin-bottom: 50px;
+}
+
+.section-1 .top h2{
+    color: #606060;
+    font-weight: bold;
+}
+
+.section-1 .top p{
+    color: #858a99;
+    font-size: 18px;
+}
+
+.section-1 .bottom p{
+    color: #858a99;
+}
+
+.section-1 .images{
+    position: relative;
+    max-width: 600px;
+    height: 400px;
+}
+
+.section-1 .images .image-1{
+    z-index: 1;
+    position: absolute;
+}
+
+.section-1 .images .image-2{
+    position: absolute;
+    left: 70px;
+    top: 100px;
+}
+
+.section-1 .images img{
+    border-radius: 4px;
+    box-shadow: 0 15px 75px 0 rgba(0,0,0,.15);
+}
+
+.section-2{
+    margin: 80px 0 20px 0;
+}
+
+.section-2 .image{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #858a99;
+    padding: 10px;
+    margin: 20px 0;
+}
+
+.section-2 .image span{
+    font-size: 24px;
+    font-weight: bold;
+    color: #858a99;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.section-2 .image .number{
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.section-2 .image .text{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.services h2{
+    margin: 20px 0;
+    font-weight: bold;
+    color: #858a99;
+    text-transform: uppercase;
+}
+
+.services .image{
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.services .image img{
+    transition: .5s;
+    width: 100%;
+    height: 100%;
+}
+
+.services .image:hover img{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.services p{
+    margin: 20px 0 0;
+    color: #858a99;
+    font-size: 15px;
+}
+
+.awards{
+    margin: 50px;
+}
+
+.awards h2{
+    margin: 20px 0;
+    font-weight: bold;
+    color: #858a99;
+    text-transform: uppercase;
+}
+
+.awards .image{
+    border: 1px solid #858a99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.awards .image img{
+    width: 50%;
+    padding: 10px 0;
+}
+
+.awards .image .genuine{
+    width: 70%;
+    padding: 17px 0;
+}
+
+.awards .image p{
+    color: #858a99;
+    font-size: 13px;
+}
+
+@media only screen and (max-width: 992px){
+    .header-bottom{
+        display: none;
+    }
+    header hr{
+       display: none;
+    }
+    .header-mobile{
+        display: flex;
+    }
+}

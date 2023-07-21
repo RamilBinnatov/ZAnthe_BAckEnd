@@ -1,0 +1,57 @@
+﻿@model RoomCreateVM
+
+<div class="container">
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1>Blog</h1>
+                            <form asp-controller="Room" asp-action="Create" enctype="multipart/form-data" class="forms-sample" method="post">
+                                <div class="form-group">
+                                    <label asp-for="Name">Name</label>
+                                    <input class="form-control" asp-for="Name">
+                                    <span asp-validation-for="Name" class="text-danger my-1"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="my-4" for="exampleInputUsername1">Desc</label>
+                                    <textarea class="form-control rounded-0" id="description-area" rows="3" asp-for="Desc"></textarea>
+                                    <span class="text-danger my-1" asp-validation-for="Desc"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="my-4" for="exampleInputUsername1">Price</label>
+                                    <input type="number"  class="form-control rounded-0" id="description-area" rows="3" asp-for="Price"></input>
+                                    <span class="text-danger my-1" asp-validation-for="Price"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Photo">Photo</label>
+                                    <input class="form-control mybutton" asp-for="Photo">
+                                    <span asp-validation-for="Photo" class="text-danger my-1"></span>
+                                </div>
+                                <input type="hidden" class="form-control mybutton" asp-for="Photo">
+                                <button type="submit" class="mybutton mr-2">Submit</button>
+                                <a asp-controller="Room" asp-action="Index" class="btn btn-light">Cancel</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <partial name="_ValidationPartial" />
+
+    <script src="~/ckeditor/ckeditor.js"></script>
+
+    <script>
+        CKEDITOR.replace("header-area")
+    </script>
+
+    <script>
+        CKEDITOR.replace("description-area")
+    </script>
+}

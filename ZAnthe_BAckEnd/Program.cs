@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ZAnthe_BAckEnd.Data;
 using ZAnthe_BAckEnd.Models;
 using ZAnthe_BAckEnd.Services;
+using ZAnthe_BAckEnd.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
@@ -16,7 +17,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
 {
     opt.Password.RequireDigit = true;
     opt.Password.RequiredLength = 8;
-    opt.Password.RequireUppercase = false;
+    opt.Password.RequireUppercase = true;
 
     opt.User.RequireUniqueEmail = true;
 
@@ -28,6 +29,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
 }).AddDefaultTokenProviders().AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddScoped<LayoutService>();
+builder.Services.AddScoped<IEmailService ,EmailService>();
+builder.Services.AddScoped<IFileService , FileService>();
 
 builder.Services.AddHttpContextAccessor();
 

@@ -59,7 +59,6 @@ namespace ZAnthe_BAckEnd.Areas.AdminArea.Controllers
             {
                 if (!ModelState.IsValid) return View();
 
-
                 RoomService newService = new RoomService
                 {
                     Name = serviceVM.Name,

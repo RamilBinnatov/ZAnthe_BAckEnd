@@ -1,4 +1,4 @@
-﻿namespace End_Project.Services.Interfaces
+﻿namespace ZAnthe_BAckEnd.Services.Interfaces
 {
     public interface IEmailService
     {

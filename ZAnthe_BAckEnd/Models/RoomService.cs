@@ -8,5 +8,7 @@ namespace ZAnthe_BAckEnd.Models
         public string? Name { get; set; }
         [NotMapped]
         public bool IsSelected { get; set; }
+        public ICollection<RoomServicePivot> RoomServicePivots { get; set; }
+
     }
 }

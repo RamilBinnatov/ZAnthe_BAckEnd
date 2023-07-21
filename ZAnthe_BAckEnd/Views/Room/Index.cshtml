@@ -1,0 +1,56 @@
+﻿@model RoomVM
+
+<main>
+    <button onclick="topFunction()" id="myBtn"><i class="fa-solid fa-angle-up"></i></button>
+    <div class="title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Rooms</h2>
+                    <ul id="" class="breadcrumb">
+                        <li class="item"><a href="index.html">Home /</a></li>
+                        <li class="item-current item">Rooms</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model.Rooms)
+                {
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="image">
+                                <img src="~/assets/img/allimg/@item.Image" alt="">
+                            </div>
+                            <div class="room-details">
+                                <a asp-controller="roomdetail" asp-action="index" asp-route-id="@item.Id"><h5>@item.Name</h5></a>
+                                <p>@item.Title</p>
+                            </div>
+                            <div class="room-price-details">
+                                <div class="room-price">
+                                    <div class="price">
+                                        <p><span>€</span>@item.Price</p>
+                                    </div>
+                                    <p>PER NIGHT</p>
+                                </div>
+                                <div class="details">
+                                    <a class="btn" asp-controller="roomdetail" asp-action="index" asp-route-id="@item.Id">
+                                        <span>MORE DETAILS</span>
+                                        <i class="fa fa fa-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>
+
+@section css {
+    <link rel="stylesheet" href="~/assets/css/rooms style.css">
+}

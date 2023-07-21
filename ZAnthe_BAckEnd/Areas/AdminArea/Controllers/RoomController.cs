@@ -1,367 +1,256 @@
-﻿//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.Rendering;
-//using System.Reflection.Metadata;
-//using ZAnthe_BAckEnd.Data;
-//using ZAnthe_BAckEnd.Helpers.Enums;
-//using ZAnthe_BAckEnd.Helpers;
-
-//namespace ZAnthe_BAckEnd.Areas.AdminArea.Controllers
-//{
-//    [Area("AdminArea")]
-//    public class RoomController : Controller
-//    {
-//        #region Readonly
-//        private readonly AppDbContext _context;
-//        private readonly IWebHostEnvironment _env;
-//        #endregion
-
-//        #region Constructor
-//        public RoomController(AppDbContext context, IWebHostEnvironment env)
-//        {
-//            _context = context;
-//            _env = env;
-//        }
-//        #endregion
-
-//        #region Index
-//        public async Task<IActionResult> Index(int page = 1, int take = 5)
-//        {
-//            List<Blog> blogs = await _context.Blogs
-//                .Where(m => !m.IsDeleted)
-//                .Include(m => m.BlogImage)
-//                .Skip((page * take) - take)
-//                .Take(take)
-//                .ToListAsync();
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Reflection.Metadata;
+using ZAnthe_BAckEnd.Data;
+using ZAnthe_BAckEnd.Helpers.Enums;
+using ZAnthe_BAckEnd.Helpers;
+using ZAnthe_BAckEnd.Models;
+using Microsoft.EntityFrameworkCore;
+using ZAnthe_BAckEnd.ViewModel.Room;
+
+namespace ZAnthe_BAckEnd.Areas.AdminArea.Controllers
+{
+    [Area("AdminArea")]
+    public class RoomController : Controller
+    {
+        #region Readonly
+        private readonly AppDbContext _context;
+        private readonly IWebHostEnvironment _env;
+        #endregion
+
+        #region Constructor
+        public RoomController(AppDbContext context, IWebHostEnvironment env)
+        {
+            _context = context;
+            _env = env;
+        }
+        #endregion
+
+        #region Index
+        public async Task<IActionResult> Index(int page = 1, int take = 5)
+        {
+            List<Room> rooms = await _context.rooms
+                .Where(m => !m.isDeleted)
+                .Skip((page * take) - take)
+                .Take(take)
+                .ToListAsync();
+
+            ViewBag.take = take;
+
+            List<RoomListVM> mapDatas = GetMapDatas(rooms);
+
+            int count = await GetPageCount(take);
+
+            Paginate<RoomListVM> result = new Paginate<RoomListVM>(mapDatas, page, count);
+
+            return View(result);
+        }
+        #endregion
 
-//            ViewBag.take = take;
-
-//            List<BlogListVM> mapDatas = GetMapDatas(blogs);
-
-//            int count = await GetPageCount(take);
-
-//            Paginate<BlogListVM> result = new Paginate<BlogListVM>(mapDatas, page, count);
-
-//            return View(result);
-//        }
-//        #endregion
-
-//        #region Create
-//        [HttpGet]
-//        public async Task<IActionResult> Create()
-//        {
-//            ViewBag.categories = await GetCategoriesAsync();
-//            var data = await GetTagAsync();
-
-//            BlogCreateVM blogCreateVM = new BlogCreateVM()
-//            {
-//                Tag = data
-//            };
-
-
-//            return View(blogCreateVM);
-//        }
-
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> Create(BlogCreateVM blog)
-//        {
-//            ViewBag.categories = await GetCategoriesAsync();
-
-
-//            if (!ModelState.IsValid)
-//            {
-//                return View(blog);
-//            }
-
-//            foreach (var photo in blog.Photos)
-//            {
-//                if (!photo.CheckFileType("image/"))
-//                {
-//                    ModelState.AddModelError("Photo", "Please choose correct image type");
-//                    return View(blog);
-//                }
-
-
-//                if (!photo.CheckFileSize(50000))
-//                {
-//                    ModelState.AddModelError("Photo", "Please choose correct image size");
-//                    return View(blog);
-//                }
-
-//            }
-
-//            List<BlogImage> images = new List<BlogImage>();
-
-//            foreach (var photo in blog.Photos)
-//            {
-//                string fileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
-
-//                string path = Helper.GetFilePath(_env.WebRootPath, "assets/img/blog", fileName);
-
-//                await Helper.SaveFile(path, photo);
+        #region Create
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var data = await GetServiceAsync();
 
+            RoomCreateVM roomCreateVM = new RoomCreateVM()
+            {
+                RoomServices = data
+            };
 
-//                BlogImage image = new BlogImage
-//                {
-//                    Image = fileName,
-//                };
+
+            return View(roomCreateVM);
+        }
 
-//                images.Add(image);
-//            }
-
-//            images.FirstOrDefault().IsMain = true;
-
-
-//            Blog newBlog = new Blog
-//            {
-//                Title = blog.Title,
-//                Content = blog.Content,
-//                CreateDate = DateTime.Now,
-//                BlogCategoryId = blog.CategoryId,
-//                BlogImage = images,
-//                Creator = User.Identity.Name
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(RoomCreateVM room)
+        {
+
+            if (!ModelState.IsValid) return View();
 
-//            };
+            if (!room.Photo.CheckFileType("image/"))
+            {
+                ModelState.AddModelError("Photo", "Please choose correct image type");
+                return View();
+            }
 
-//            await _context.Blogs.AddAsync(newBlog);
+            if (!room.Photo.CheckFileSize(200000))
+            {
+                ModelState.AddModelError("Photo", "Please choose correct image size");
+                return View();
+            }
 
-//            await _context.SaveChangesAsync();
-
-
-//            foreach (var item in blog.Tag.Where(m => m.IsSelected))
-//            {
-//                BlogTag blogTag = new BlogTag
-//                {
-//                    BlogId = newBlog.Id,
-//                    TagId = item.Id,
-//                };
-//                await _context.BlogTags.AddAsync(blogTag);
-//            }
+            string fileName = Guid.NewGuid().ToString() + "_" + room.Photo.FileName;
+
+            string path = Helper.GetFilePath(_env.WebRootPath, "assets/img/allimg", fileName);
 
-//            _context.BlogImages.UpdateRange(images);
-//            _context.Blogs.Update(newBlog);
-//            await _context.SaveChangesAsync();
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                await room.Photo.CopyToAsync(stream);
+            }
 
-//            return RedirectToAction(nameof(Index));
-//        }
-//        #endregion
-
-//        #region Delete
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> Delete(int id)
-//        {
-//            Blog blog = await _context.Blogs
-//                .Where(m => !m.IsDeleted && m.Id == id)
-//                .Include(m => m.BlogImage)
-//                .FirstOrDefaultAsync();
 
-//            if (blog == null) return NotFound();
 
-//            foreach (var item in blog.BlogImage)
-//            {
-//                string path = Helper.GetFilePath(_env.WebRootPath, "img", item.Image);
-//                Helper.DeleteFile(path);
-//                item.IsDeleted = true;
-//            }
+            Room newRoom = new Room
+            {
+                Name = room.Name,
+                Desc = room.Desc,
+                Price= room.Price,
+            };
 
-//            blog.IsDeleted = true;
-
-//            await _context.SaveChangesAsync();
-
-//            return RedirectToAction(nameof(Index));
-
-//        }
+            await _context.rooms.AddAsync(newRoom);
 
-//        #endregion
-
-//        #region Detail
-//        [HttpGet]
-//        public async Task<IActionResult> Detail(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return BadRequest();
-//            }
+            await _context.SaveChangesAsync();
 
-//            Blog blog = await _context.Blogs
-//                .Where(m => !m.IsDeleted && m.Id == id)
-//                .Include(m => m.BlogImage)
-//                .Include(m => m.BlogCategory)
-//                .FirstOrDefaultAsync();
 
-//            List<BlogTag> blogTags = await _context.BlogTags.Where(m => m.BlogId == id).ToListAsync();
-//            List<Tag> tags = new List<Tag>();
-//            foreach (var tag in blogTags)
-//            {
-//                Tag dbTag = await _context.Tags.Where(m => m.Id == tag.TagId).FirstOrDefaultAsync();
-//                tags.Add(dbTag);
-//            }
+            foreach (var item in room.RoomServices.Where(m => m.IsSelected))
+            {
+                RoomServicePivot roomServicePivot = new RoomServicePivot
+                {
+                    RoomId = newRoom.Id,
+                    RoomServiceId = item.Id,
+                };
+                await _context.roomServicePivots.AddAsync(roomServicePivot);
+            }
 
-//            if (blog == null)
-//            {
-//                return NotFound();
-//            }
-//            var data = await GetTagAsync();
+            
+            _context.rooms.Update(newRoom);
+            await _context.SaveChangesAsync();
 
-//            BlogDetailVM blogDetail = new BlogDetailVM
-//            {
-//                Title = blog.Title,
-//                Content = blog.Content,
-//                BlogImages = blog.BlogImage,
-//                CategoryName = blog.BlogCategory.Name,
-//                Tags = tags,
-//                CreateDate = blog.CreateDate,
-//                Creator = blog.Creator,
-//            };
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
 
+        #region Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Room room = await _context.rooms
+                .Where(m => !m.isDeleted && m.Id == id)
+                .FirstOrDefaultAsync();
 
+            if (room == null) return NotFound();
 
+            room.isDeleted = true;
 
-//            return View(blogDetail);
-//        }
-//        #endregion
+            await _context.SaveChangesAsync();
 
-//        #region Edit
-//        [HttpGet]
-//        public async Task<IActionResult> Edit(int? id)
-//        {
-//            if (id is null) return BadRequest();
+            return RedirectToAction(nameof(Index));
 
-//            ViewBag.categories = await GetCategoriesAsync();
+        }
 
-//            Blog dbBlog = await GetByIdAsync((int)id);
+        #endregion
 
-//            return View(new BlogEditVM
-//            {
-//                Title = dbBlog.Title,
-//                Content = dbBlog.Content,
-//                CategoryId = dbBlog.BlogCategoryId,
-//                Images = dbBlog.BlogImage,
-//            });
-//        }
 
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public async Task<IActionResult> Edit(int id, BlogEditVM updadetBlog)
-//        {
-//            ViewBag.categories = await GetCategoriesAsync();
 
-//            if (!ModelState.IsValid) return View(updadetBlog);
+        #region Edit
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id is null) return BadRequest();
 
-//            Blog dbBlog = await GetByIdAsync(id);
+            Room dbRoom = await GetByIdAsync((int)id);
 
-//            if (updadetBlog.Photos != null)
-//            {
+            return View(new RoomEditVM
+            {
+                Name = dbRoom.Name,
+                Desc = dbRoom.Desc,
+            });
+        }
 
-//                foreach (var photo in updadetBlog.Photos)
-//                {
-//                    if (!photo.CheckFileType("image/"))
-//                    {
-//                        ModelState.AddModelError("Photo", "Please choose correct image type");
-//                        return View(updadetBlog);
-//                    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, RoomEditVM roomEditVM)
+        {
 
+            if (!ModelState.IsValid) return View(roomEditVM);
 
-//                    if (!photo.CheckFileSize(500))
-//                    {
-//                        ModelState.AddModelError("Photo", "Please choose correct image size");
-//                        return View(updadetBlog);
-//                    }
+            Room dbRoom = await GetByIdAsync(id);
 
-//                }
+            if (!ModelState.IsValid) return View();
 
-//                foreach (var item in dbBlog.BlogImage)
-//                {
-//                    string path = Helper.GetFilePath(_env.WebRootPath, "img", item.Image);
-//                    Helper.DeleteFile(path);
-//                }
+            if (!roomEditVM.Photo.CheckFileType("image/"))
+            {
+                ModelState.AddModelError("Photo", "Please choose correct image type");
+                return View();
+            }
 
+            if (!roomEditVM.Photo.CheckFileSize(200000))
+            {
+                ModelState.AddModelError("Photo", "Please choose correct image size");
+                return View();
+            }
 
-//                List<BlogImage> images = new List<BlogImage>();
+            string fileName = Guid.NewGuid().ToString() + "_" + roomEditVM.Photo.FileName;
 
-//                foreach (var photo in updadetBlog.Photos)
-//                {
+            string path = Helper.GetFilePath(_env.WebRootPath, "assets/img/room", fileName);
 
-//                    string fileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+            using (FileStream stream = new FileStream(path, FileMode.Create))
+            {
+                await roomEditVM.Photo.CopyToAsync(stream);
+            }
 
-//                    string path = Helper.GetFilePath(_env.WebRootPath, "assets/img/blog", fileName);
 
-//                    await Helper.SaveFile(path, photo);
+            return View(new RoomEditVM
+            {
+                Name = dbRoom.Name,
+                Desc = dbRoom.Desc,
+                Image = fileName
+            });
 
+            await _context.SaveChangesAsync();
 
-//                    BlogImage image = new BlogImage
-//                    {
-//                        Image = fileName,
-//                    };
+            return RedirectToAction(nameof(Index));
+        }
 
-//                    images.Add(image);
+        private async Task<List<RoomService>> GetServiceAsync()
+        {
+            List<RoomService> service = await _context.roomServices.Where(m => !m.isDeleted).ToListAsync();
+            return service;
+        }
 
-//                }
+        #endregion
 
-//                images.FirstOrDefault().IsMain = true;
-//            }
+        #region Services
 
 
-//            dbBlog.Title = updadetBlog.Title;
-//            dbBlog.Content = updadetBlog.Content;
-//            dbBlog.BlogCategoryId = updadetBlog.CategoryId;
 
-//            await _context.SaveChangesAsync();
+        private async Task<Room> GetByIdAsync(int id)
+        {
+            return await _context.rooms
+                .Where(m => !m.isDeleted && m.Id == id)
+                .FirstOrDefaultAsync();
+        }
 
-//            return RedirectToAction(nameof(Index));
-//        }
+        private List<RoomListVM> GetMapDatas(List<Room> rooms)
+        {
+            List<RoomListVM> roomListVMs = new List<RoomListVM>();
 
-//        #endregion
+            foreach (var item in rooms)
+            {
+                RoomListVM newRoom = new RoomListVM
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Img = item.Image,
+                    Price = item.Price,
+                };
 
-//        #region Services
-//        private async Task<SelectList> GetCategoriesAsync()
-//        {
-//            IEnumerable<BlogCategory> categories = await _context.BlogCategories.Where(m => !m.IsDeleted).ToListAsync();
-//            return new SelectList(categories, "Id", "Name");
-//        }
-//        private async Task<List<Tag>> GetTagAsync()
-//        {
-//            List<Tag> tags = await _context.Tags.Where(m => !m.IsDeleted).ToListAsync();
-//            return tags;
-//        }
+                roomListVMs.Add(newRoom);
+            }
 
-//        private async Task<Blog> GetByIdAsync(int id)
-//        {
-//            return await _context.Blogs
-//                .Where(m => !m.IsDeleted && m.Id == id)
-//                .Include(m => m.BlogCategory)
-//                .Include(m => m.BlogImage)
-//                .FirstOrDefaultAsync();
-//        }
+            return roomListVMs;
+        }
 
-//        private List<BlogListVM> GetMapDatas(List<Blog> blogs)
-//        {
-//            List<BlogListVM> blogLists = new List<BlogListVM>();
+        private async Task<int> GetPageCount(int take)
+        {
+            int blogCount = await _context.rooms.Where(m => !m.isDeleted).CountAsync();
 
-//            foreach (var blog in blogs)
-//            {
-//                BlogListVM newBlog = new BlogListVM
-//                {
-//                    Id = blog.Id,
-//                    Title = blog.Title,
-//                    MainImage = blog.BlogImage.Where(m => m.IsMain).FirstOrDefault()?.Image,
-//                    Creator = blog.Creator
-//                };
-
-//                blogLists.Add(newBlog);
-//            }
-
-//            return blogLists;
-//        }
-
-//        private async Task<int> GetPageCount(int take)
-//        {
-//            int blogCount = await _context.Blogs.Where(m => !m.IsDeleted).CountAsync();
-
-//            return (int)Math.Ceiling((decimal)blogCount / take);
-//        }
-//        #endregion
-//    }
-//}
+            return (int)Math.Ceiling((decimal)blogCount / take);
+        }
+        #endregion
+    }
+}

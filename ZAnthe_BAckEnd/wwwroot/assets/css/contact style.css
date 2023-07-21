@@ -1,0 +1,147 @@
+
+
+.title{
+    background: #f5f3f0;
+    padding: 50px 0;
+}
+
+.title ul li{
+    margin-right: 10px;
+}
+
+.section{
+    margin: 5rem 0;
+}
+
+.section form{
+    margin: 10px 0 55px 0;
+}
+
+.section .left .container{
+    padding: 0;
+}
+
+.section .left .text-mail input{
+    outline: none;
+    height: 40px;
+    width: 100%;
+    padding: 10px;
+    margin: 0 0 30px 0;
+    background-color: #fcfcfc;
+    border: 1px solid #dedede;
+}
+
+.section .left textarea{
+    width: 100%;
+    outline: none;
+    background-color: #fcfcfc;
+    border: 1px solid #dedede;
+    padding: 10px;
+}
+
+.section .left .accept{
+    margin: 30px 0 30px 0;
+}
+
+.section .left .button{
+    border: 1px solid #deb666;
+    background-color: #deb666;
+    color: #fff;
+    height: 44px;
+    width: 224px;
+    border-radius: 2px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.section .left .button:hover{
+    border: 1px solid #B69854;
+    background-color: #B69854;
+}
+
+.section .right .map{
+    width: 100%;
+    height: 475px;
+}
+
+.section .right .map .google-map{
+    width: 100%;
+    height: 100%;
+}
+
+.section .right .social-media{
+    display: flex;
+    padding: 15px 0;
+}
+
+.section .right .social-media i{
+    background: #fff;
+    border: 1px solid #eaeaea;
+    display: flex;
+    height: 40px;
+    width: 40px;
+    margin-right: 22px;
+    justify-content: center;
+    align-items: center;
+}
+
+.section .right #facebook{
+    color: #3b5998;
+}
+
+.section .right #facebook:hover{
+    color: #fff;
+    background-color: #3b5998;
+    cursor: pointer;
+}
+
+.section .right #twitter{
+    color: #4099ff;
+}
+
+.section .right #twitter:hover{
+    color: #fff;
+    background-color: #4099ff;
+    cursor: pointer;
+}
+
+.section .right #pinterest{
+    color: #cb2027;
+}
+
+.section .right #pinterest:hover{
+    color: #fff;
+    background-color: #cb2027;
+    cursor: pointer;
+}
+
+.section .right #linkedin{
+    color: #007bb6;
+}
+
+.section .right #linkedin:hover{
+    color: #fff;
+    background-color: #007bb6;
+    cursor: pointer;
+}
+
+.section .right #youtube{
+    color: #b00;
+}
+
+.section .right #youtube:hover{
+    color: #fff;
+    background-color: #b00;
+    cursor: pointer;
+}
+
+.section .right #instagram{
+    color: #125688;
+}
+
+.section .right #instagram:hover{
+    color: #fff;
+    background-color: #125688;
+    cursor: pointer;
+}
+

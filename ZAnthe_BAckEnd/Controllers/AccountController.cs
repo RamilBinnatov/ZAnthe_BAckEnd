@@ -1,10 +1,9 @@
-﻿using End_Project.Services.Interfaces;
-using End_Project.ViewModels.AccountViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ZAnthe_BAckEnd.Helpers.Enums;
 using ZAnthe_BAckEnd.Models;
+using ZAnthe_BAckEnd.Services.Interfaces;
+using ZAnthe_BAckEnd.ViewModel.Account;
 
 namespace ZAnthe_BAckEnd.Controllers
 {
@@ -52,8 +51,8 @@ namespace ZAnthe_BAckEnd.Controllers
             AppUser user = new AppUser
             {
                 FullName = registerVM.Fullname,
-                UserName = registerVM.Username,
-                Email = registerVM.Email
+                Email = registerVM.Email,
+                UserName = registerVM.UserName,
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, registerVM.Password);
@@ -85,7 +84,7 @@ namespace ZAnthe_BAckEnd.Controllers
 
             _emailService.Send(user.Email, subject, body, null);
 
-            return RedirectToAction(nameof(VerifyEmail));
+            return RedirectToAction(nameof(Login));
 
         }
 
@@ -98,7 +97,7 @@ namespace ZAnthe_BAckEnd.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginVM loginVM)
+        public async Task<IActionResult> Login(Login loginVM)
         {
             if (!ModelState.IsValid)
             {
@@ -148,9 +147,13 @@ namespace ZAnthe_BAckEnd.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM forgotPassword)
+        public async Task<IActionResult> ForgotPassword(ForgetPassword forgotPassword)
         {
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
 
             AppUser existUser = await _userManager.FindByEmailAsync(forgotPassword.Email);
 
@@ -177,7 +180,10 @@ namespace ZAnthe_BAckEnd.Controllers
 
             _emailService.Send(existUser.Email, subject, body);
 
-            return RedirectToAction(nameof(VerifyEmail));
+            
+
+            return RedirectToAction("Index", "Home");
+
         }
 
 
@@ -185,12 +191,12 @@ namespace ZAnthe_BAckEnd.Controllers
         [HttpGet]
         public IActionResult ResetPassword(string userId, string token)
         {
-            return View(new ResetPasswordVM { UserId = userId, Token = token });
+            return View(new ResetPassword    { UserId = userId, Token = token });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(ResetPasswordVM resetPassword)
+        public async Task<IActionResult> ResetPassword(ResetPassword resetPassword)
         {
             if (!ModelState.IsValid) return View(resetPassword);
 
@@ -232,7 +238,7 @@ namespace ZAnthe_BAckEnd.Controllers
             return View();
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        
         public async Task CreateRoles()
         {
             foreach (var role in Enum.GetValues(typeof(Roles)))

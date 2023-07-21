@@ -1,0 +1,148 @@
+
+.title{
+    background: #f5f3f0;
+    padding: 50px 0;
+    margin-bottom: 50px;
+}
+
+.title ul li{
+    margin-right: 10px;
+}
+
+.section{
+    margin: 50px 0;
+}
+
+.section .card{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #eaeaea;
+    margin: 15px 0;
+}
+
+.section .card .image{
+    width: 40%;
+}
+
+.section .card .image img{
+    width: 100%;
+}
+
+.section .card .room-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    width: 40%;
+}
+
+.section .card .room-details h5{
+    font-size: 22px;
+    color: #606060;
+}
+
+.section .card .room-details p{
+    margin-top: 20px;
+    color: #858a99;
+}
+
+.section .room-price-details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 20%;
+    border-left: 1px solid #eaeaea;
+}
+
+.section .room-price-details .room-price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.section .room-price-details .room-price p{
+    color: #858a99;
+    font-size: 12px;
+}
+
+.section .room-price-details .room-price .price span{
+    font-size: 20px;
+}
+
+.section .room-price-details .room-price .price p{
+    font-size: 24px;
+    color: #606060;
+    font-weight: 500;
+}
+
+.section .room-price-details a{
+    border-radius: 50px;
+    font-size: 14px;
+}
+
+.section .room-price-details a:hover{
+    background-color: #19a1f7;
+}
+
+.section .room-price-details .details span{
+    color: #19a1f7;
+    font-weight: 800;
+}
+
+.section .room-price-details a:hover span{
+    color: #fff;
+}
+
+.section .room-price-details i{
+    margin-top: -2px;
+    vertical-align: middle;
+    border-radius: 50%;
+    line-height: 20px;
+    height: 20px;
+    width: 20px;
+    background: #19a1f7;
+    margin-left: 8px;
+    margin-right: 0;
+    color: #fff;
+    font-size: 6px;
+    text-align: center;
+}
+
+.section .room-price-details a:hover i{
+    color: #19a1f7;
+    background-color: #fff;
+}
+
+
+@media only screen and (max-width: 992px){
+   
+    .section .card{
+        display: flex;
+        flex-direction: column;
+    }
+    .section .card .image{
+        width: 100%;
+    }
+    .section .card .room-details{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        width: 100%;
+    }
+    .section .room-price-details{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+    }
+    .section .room-price-details a{
+        border-radius: 50px;
+        font-size: 14px;
+        margin: 20px;
+    }
+}

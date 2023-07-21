@@ -1,7 +1,7 @@
-﻿using End_Project.Services.Interfaces;
+﻿using ZAnthe_BAckEnd.Services.Interfaces;
 using System.IO;
 
-namespace End_Project.Services
+namespace ZAnthe_BAckEnd.Services
 {
     public class FileService : IFileService
     {

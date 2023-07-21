@@ -1,2 +1,209 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Zante &#8211; Hotel Booking WordPress Theme</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" integrity="sha512-Mo79lrQ4UecW8OCcRUZzf0ntfMNgpOFR46Acj2ZtWO8vKhBvD79VCp3VOKSzk6TovLg5evL3Xi3u475Q/jMu4g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @RenderSection("css", required: false)
+    <link rel="stylesheet" href="~/assets/css/style.css">
+   
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-6 py-2 d-flex align-items-center">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span>Welcome @User.Identity.Name</span>
+                        }
+                        else
+                        {
+                            <span>Welcome</span>
+
+                        }
+                        
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-6 d-flex justify-content-end align-items-center py-2">
+                        <div class="phone">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            <a href="tel:1300250296">1300250296</a>
+                        </div>
+                        <div class="email">
+                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                            <a href="">contact@hotelzante.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="header-mobile">
+                    <div class="header-left">
+                        <img src="https://demo.zantetheme.com/wp-content/themes/zante/assets/images/logo.svg" alt="">
+                    </div>
+                    <div class="header-right">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <div id="sidebar">
+                        <div class="close">
+                            <span>Close X</span>
+                        </div>
+                        <div class="title">
+                            <p>MENU</p>
+                        </div>
+                        <a href="index.html"><span>Home</span></a>
+                        <div class="dropdown">
+                            <span>Branches</span>
+                            <div class="dropdown-content">
+                                <a asp-controller="room" asp-action="index">Zante Greece</a>
+                                <a href="branch.html">Zante Italy</a>
+                                <a href="branch.html">Zante UK</a>
+                            </div>
+                        </div>
+                        <a href="rooms.html">Rooms</a>
+                        @if (User.Identity.IsAuthenticated )
+                        {
+                            <a asp-controller="Account" asp-action="LogOut">Log out</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Register">Login/Register</a>
+
+                        }
+
+                        <a href="about.html">About us</a>
+                        <a href="contact.html">Contact us</a>
+                        <div class="book">
+                            <a class="btn" href="book-online.html"><i class="fa fa-calendar" aria-hidden="true"></i></i><span>BOOK ONLINE</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="header-bottom" id="myHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="image col-lg-3">
+                        <a href="index.html">
+                            <img src="https://demo.zantetheme.com/wp-content/themes/zante/assets/images/logo.svg" alt="">
+                        </a>
+                    </div>
+                    <div class="navbar col-lg-9">
+                        <a href="index.html">Home</a>
+                        <div class="dropdown">
+                            <span>Branches</span>
+                            <div class="dropdown-content">
+                                <a href="branch.html">Zante Greece</a>
+                                <a href="branch.html">Zante Italy</a>
+                                <a href="branch.html">Zante UK</a>
+                            </div>
+                        </div>
+                        <a asp-controller="room" asp-action="index">Rooms</a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-controller="Account" asp-action="LogOut">Log out</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Register">Login/Register</a>
+                        }
+                        <a asp-controller="About">About us</a>
+                        <a href="contact.html">Contact us</a>
+                        <a class="btn" href="book-online.html"><i class="fa fa-calendar" aria-hidden="true"></i></i><span>BOOK ONLINE</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <hr>
             @RenderBody()
+    <hr>
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <img src="https://demo.zantetheme.com/wp-content/uploads/2019/09/logo_footer-2.png" alt="">
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <h5>LATEST NEWS</h5>
+                        <ul>
+                            <li>Hotel Zante in pictures</li>
+                            <li>10 Things You Should Know</li>
+                            <li>Hotel Zante Weddings</li>
+                            <li>Live your myth in Greece</li>
+                            <li>Post without feuatured image</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <h5>USEFUL LINKS</h5>
+                        <ul>
+                            <li><a href="">Location</a></li>
+                            <li><a href="">Gallery</a></li>
+                            <li><a href="contact.html">Contact us</a></li>
+                            <li><a href="about.html">About us</a></li>
+                            <li><a href="">My Bookings</a></li>
+                        </ul>
+                    </div>
+                    <div class="contact col-lg-3 col-md-6 col-12">
+                        <h5>CONTACT US</h5>
+                        <ul>
+                            <li><i class="fa-solid fa-location-dot"></i>25, Navagio Zakynthos, Greece</li>
+                            <li><i class="fa fa-phone" aria-hidden="true"></i> Phone: 123-12345678</li>
+                            <li><i class="fa fa-envelope-o"></i>Email: contact@hotelzante.com</li>
+                        </ul>
+                        <div class="social-media">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                            <i class="fa fa-youtube" aria-hidden="true"></i>
+                            <i class="fa fa-pinterest" aria-hidden="true"></i>
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                            <i class="fa fa-tripadvisor" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <p>© 2023 Hotel Zante. Designed by <span>Eagle-Themes</span></p>
+                    </div>
+                    <div class="col-6">
+                        <div class="language">
+                            <i class="fa-solid fa-earth-americas"></i>
+                            <span>English</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <!-- date range picker -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <!-- wow js -->
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/account.js"></script>
+</body>
+</html>

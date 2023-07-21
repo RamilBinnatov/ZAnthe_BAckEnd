@@ -169,6 +169,9 @@ namespace ZAnthe_BAckEnd.Migrations
                     b.Property<string>("Header")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -198,10 +201,6 @@ namespace ZAnthe_BAckEnd.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
@@ -264,10 +263,10 @@ namespace ZAnthe_BAckEnd.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Img")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isDeleted")
@@ -420,6 +419,9 @@ namespace ZAnthe_BAckEnd.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
 
@@ -442,15 +444,10 @@ namespace ZAnthe_BAckEnd.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
 
                     b.ToTable("roomServices");
                 });
@@ -624,23 +621,16 @@ namespace ZAnthe_BAckEnd.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ZAnthe_BAckEnd.Models.RoomService", b =>
-                {
-                    b.HasOne("ZAnthe_BAckEnd.Models.Room", null)
-                        .WithMany("RoomServices")
-                        .HasForeignKey("RoomId");
-                });
-
             modelBuilder.Entity("ZAnthe_BAckEnd.Models.RoomServicePivot", b =>
                 {
                     b.HasOne("ZAnthe_BAckEnd.Models.Room", "room")
-                        .WithMany()
+                        .WithMany("RoomServicePivots")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ZAnthe_BAckEnd.Models.RoomService", "roomService")
-                        .WithMany()
+                        .WithMany("RoomServicePivots")
                         .HasForeignKey("RoomServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -652,7 +642,12 @@ namespace ZAnthe_BAckEnd.Migrations
 
             modelBuilder.Entity("ZAnthe_BAckEnd.Models.Room", b =>
                 {
-                    b.Navigation("RoomServices");
+                    b.Navigation("RoomServicePivots");
+                });
+
+            modelBuilder.Entity("ZAnthe_BAckEnd.Models.RoomService", b =>
+                {
+                    b.Navigation("RoomServicePivots");
                 });
 #pragma warning restore 612, 618
         }

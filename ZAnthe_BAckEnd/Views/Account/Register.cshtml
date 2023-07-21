@@ -1,0 +1,37 @@
+﻿@model RegisterVM
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+    <button onclick="topFunction()" id="myBtn"><i class="fa-solid fa-angle-up"></i></button>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="register">
+                    <div class="title">
+                        <h3>Sign Up</h3>
+                    </div>
+                    <div class="text-danger mb-2 mt-3" asp-validation-summary="All"></div>
+                    <form asp-controller="Account" asp-action="Register"  method="post" enctype="application/x-www-form-urlencoded">
+                        <input type="text" placeholder="Fullname" autocomplete="nope" asp-for="Fullname">
+                        <input type="text" placeholder="UserName" autocomplete="nope" asp-for="UserName">
+                        <input type="email" placeholder="Mail" required="required" autocomplete="nope" asp-for="Email">
+                        <input type="password" placeholder="Password" required="required" id="repeatPasswordId" autocomplete="nope" asp-for="Password">
+                        <input type="password" placeholder="Confirm Password" autocomplete="nope" required="required" id="repeatPasswordId" autocomplete="off" asp-for="ConfirmPassword">
+                        <input class="button" type="submit" value="SIGN UP">
+                        <div class="register-footer">
+                            <a asp-action="Login">Already Registered?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section css {
+    <link rel="stylesheet" href="~/assets/css/register.css">
+}
+

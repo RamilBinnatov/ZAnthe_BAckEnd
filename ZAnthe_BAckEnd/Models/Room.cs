@@ -4,12 +4,9 @@
     {
         public string? Image { get; set; }
         public string? Name { get; set; }
+        public string? Title { get; set; }
         public string? Desc { get; set; }
-        public int GuestCount { get; set; }
-        public int MinBookingLim { get; set; }
-        public string BedType { get; set; }
-        public int Area { get; set; }
-        public ICollection<RoomServicePivot> RoomServicesPivot { get; set; }
+        public ICollection<RoomServicePivot> RoomServicePivots { get; set; }
         public int Price { get; set; }
     }
 }

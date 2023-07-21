@@ -1,11 +1,12 @@
-﻿using End_Project.Services.Interfaces;
+﻿using ZAnthe_BAckEnd.Services.Interfaces;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit.Text;
 using MimeKit;
 using MailKit.Net.Smtp;
+using ZAnthe_BAckEnd.Services.Interfaces;
 
-namespace End_Project.Services
+namespace ZAnthe_BAckEnd.Services
 {
     public class EmailService : IEmailService
     {

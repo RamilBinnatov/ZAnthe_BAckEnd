@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\assets\img\awards\" />
+    <Folder Include="wwwroot\assets\img\allimg\" />
+    <Folder Include="wwwroot\assets\img\room\" />
     <Folder Include="wwwroot\assets\img\slider\" />
   </ItemGroup>
 

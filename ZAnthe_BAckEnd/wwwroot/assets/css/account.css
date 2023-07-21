@@ -1,0 +1,68 @@
+
+
+.account{
+    margin: 80px 0;
+}
+
+.account .title{
+    margin: 30px 0;
+}
+
+.account .title h3{
+    font-weight: 600;
+    color: #606060;
+}
+
+.account form{
+    display: flex;
+    flex-direction: row;
+}
+
+.account form .left{
+    margin-right: 20px;
+}
+
+.account form input{
+    margin: 10px 0 20px;
+    outline: none;
+    color: #8e8e8e;
+    border: 1px solid #dedede;
+    border-radius: 1px;
+    padding: 12px 15px;
+    width: 100%;
+}
+
+.account button{
+    border: 1px solid #deb666;
+    border-radius: 2px;
+    padding: 10px 15px;
+    background-color: #deb666;
+    color: #fff;
+    font-weight: 600;
+}
+
+.account form button:hover{
+    background-color: #B69854;
+}
+
+.account .account-footer{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+@media only screen and (max-width: 992px) {
+    .header-bottom{
+        display: none;
+    }
+    header hr{
+       display: none;
+    }
+    .header-mobile{
+        display: flex;
+    }
+    .account form{
+        display: flex;
+        flex-direction: column;
+    }
+}
