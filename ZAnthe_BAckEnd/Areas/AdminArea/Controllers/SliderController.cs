@@ -162,7 +162,7 @@ namespace ZAnthe_BAckEnd.Areas.AdminArea.Controllers
 
             string fileName = Guid.NewGuid().ToString() + "_" + slider.Photo.FileName;
 
-            string path = Helper.GetFilePath(_env.WebRootPath, "assets/img/slider", fileName);
+            string path = Helper.GetFilePath(_env.WebRootPath, "assets/img/allimg", fileName);
 
             using (FileStream stream = new FileStream(path, FileMode.Create))
             {
