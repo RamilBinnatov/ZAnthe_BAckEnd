@@ -19,51 +19,6 @@
 
         }
     </div>
-    <section id="checka">
-        <div class="container-fluid">
-            <div class="checking-a">
-                <div class="checka-content-box">
-                    <!-- <input type="text" name="" id="daterange"> -->
-                    <!-- <p id="demo"></p> -->
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <input type="button" class="form-control rounded-0 text-start" id="daterange">
-                                <!-- <input type="date" id="dateInput" class="form-control rounded-0"> -->
-                            </div>
-                            <div class="col-lg-4">
-                                <input type="button" class="form-control rounded-0 text-start" id="addGuestBtn" value="Guest - 1">
-                                <div class="guest-member-content">
-                                    <span></span>
-                                    <div class="guest-title">
-                                        <div class="d-flex justify-content-between mb-3">
-                                            <div><b>Adults</b><br>Ages 18+</div>
-                                            <div class="guest-add-content">
-                                                <button id="adultsubGuestNum">-</button>
-                                                <strong id="adult-number">1</strong>
-                                                <button id="adultaddGuestNum">+</button>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <div><b>Children</b><br>Ages 4 - 18</div>
-                                            <div class="guest-add-content">
-                                                <button id="childsubGuestNum">-</button>
-                                                <strong id="child-number">0</strong>
-                                                <button id="childaddGuestNum">+</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <a class="btn" href="book-online.html"><span>Check Availability</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <div class="section-1">
         <div class="container">
             <div class="row">
@@ -75,7 +30,7 @@
                         </div>
                         <div class="bottom">
                         <p>@Model.aboutBanners.Description</p>
-                            <a class="btn" href="about.html">
+                            <a class="btn" asp-controller="about" asp-action="Index">
                                 <span>MORE DETAILS</span>
                                 <i class="fa fa fa-chevron-right"></i>
                             </a>
@@ -103,13 +58,13 @@
                     <div class="left">
                         <div class="card">
                             <div class="image">
-                                <img src="https://demo.zantetheme.com/wp-content/uploads/2018/05/room-full-1-720x470.jpg" alt="">
+                                <img src="~/assets/img/allimg/@Model.FavoriteRoomSingle.Image" alt="">
                                 <div class="room-price">
-                                    <p>€199 <span>/ night</span></p>
+                                    <p>€@Model.FavoriteRoomSingle.Price <span>/ night</span></p>
                                 </div>
                             </div>
                             <div class="room-details">
-                                <h5>Deluxe Room</h5>
+                                <h5>@Model.FavoriteRoomSingle.Name</h5>
                                 <div class="room-services">
                                     <i class="fa fa-glass"></i>
                                     <i class="fa fa-bath"></i>
@@ -126,86 +81,32 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="right">
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="image">
-                                    <img src="https://demo.zantetheme.com/wp-content/uploads/2018/05/single-720x470.jpg" alt="">
-                                    <div class="room-price">
-                                        <p>€210 <span>/ night</span></p>
+                        @foreach (var item in Model.FavoriteRooms)
+                        {
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="image">
+                                        <img src="~/assets/img/allimg/@item.Image" alt="">
+                                        <div class="room-price">
+                                            <p>€@item.Price <span>/ night</span></p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="room-details">
-                                    <h5>Single Room</h5>
-                                    <div class="room-services">
-                                        <i class="fa fa-wifi"></i>
-                                        <i class="fa fa-eye-slash"></i>
-                                        <i class="fa fa-bath"></i>
-                                        <i class="fa fa-coffee"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="image">
-                                    <img src="https://demo.zantetheme.com/wp-content/uploads/2018/05/1-720x470.jpg" alt="">
-                                    <div class="room-price">
-                                        <p>€189 <span>/ night</span></p>
-                                    </div>
-                                </div>
-                                <div class="room-details">
-                                    <h5>Family Room</h5>
-                                    <div class="room-services">
-                                        <i class="fa fa-cutlery"></i>
-                                        <i class="fa fa-coffee"></i>
-                                        <i class="fa fa-television"></i>
-                                        <i class="fa fa-female"></i>
+                                    <div class="room-details">
+                                        <h5>@item.Name</h5>
+                                        <div class="room-services">
+                                            <i class="fa fa-wifi"></i>
+                                            <i class="fa fa-eye-slash"></i>
+                                            <i class="fa fa-bath"></i>
+                                            <i class="fa fa-coffee"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="image">
-                                    <img src="https://demo.zantetheme.com/wp-content/uploads/2018/05/king-room-720x470.jpg" alt="">
-                                    <div class="room-price">
-                                        <p>€111 <span>/ night</span></p>
-                                    </div>
-                                </div>
-                                <div class="room-details">
-                                    <h5>King Room</h5>
-                                    <div class="room-services">
-                                        <i class="fa fa-bath"></i>
-                                        <i class="fa fa-cutlery"></i>
-                                        <i class="fa fa-female"></i>
-                                        <i class="fa fa-coffee"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="image">
-                                    <img src="https://demo.zantetheme.com/wp-content/uploads/2018/05/honeymoon-720x470.jpg" alt="">
-                                    <div class="room-price">
-                                        <p>€30 <span>/ night</span></p>
-                                    </div>
-                                </div>
-                                <div class="room-details">
-                                    <h5>Honeymoon Room</h5>
-                                    <div class="room-services">
-                                        <i class="fa fa-female"></i>
-                                        <i class="fa fa-coffee"></i>
-                                        <i class="fa fa-television"></i>
-                                        <i class="fa fa-snowflake"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
                 <div class="all-rooms">
-                    <a class="btn" href="rooms.html">
+                    <a class="btn" asp-controller="room" asp-action="index">
                         <span>VIEW ALL ROOMS</span>
                         <i class="fa fa fa-chevron-right"></i>
                     </a>
@@ -230,42 +131,19 @@
                     </div>
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="right">
-                            <div class="service">
-                                <div class="image">
-                                    <img src="https://demo.zantetheme.com/wp-content/uploads/2018/05/plate.png" alt="">
+                            @foreach (var item in Model.services)
+                            {
+                                <div class="service">
+                                    <div class="image">
+                                        <img src="~/assets/img/allimg/@item.Image" alt="">
+                                    </div>
+                                    <div class="content">
+                                        <h5>@item.Title</h5>
+                                        <p>@item.Desc</p>
+                                    </div>
                                 </div>
-                                <div class="content">
-                                    <h5>Restaurant</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
-                                </div>
-                            </div>
-                            <div class="service">
-                                <div class="image">
-                                    <img src="https://demo.zantetheme.com/wp-content/uploads/2018/05/spa.png" alt="">
-                                </div>
-                                <div class="content">
-                                    <h5>Spa - Beauty & Health</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
-                                </div>
-                            </div>
-                            <div class="service">
-                                <div class="image">
-                                    <img src="https://demo.zantetheme.com/wp-content/uploads/2018/05/conference.png" alt="">
-                                </div>
-                                <div class="content">
-                                    <h5>Conference Room</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
-                                </div>
-                            </div>
-                            <div class="service">
-                                <div class="image">
-                                    <img src="https://demo.zantetheme.com/wp-content/uploads/2018/05/swimmer.png" alt="">
-                                </div>
-                                <div class="content">
-                                    <h5>Swimming Pool</h5>
-                                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
-                                </div>
-                            </div>
+
+                            }
                         </div>
                     </div>
                 </div>
@@ -273,7 +151,7 @@
         </div>
     </div>
     <div class="video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/Jb9BAz32Gg4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="@Model.poster.VidLink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
     <div class="discover">
         <div class="container">
@@ -316,88 +194,6 @@
                                     <img src="https://demo.zantetheme.com/wp-content/uploads/2018/04/acropolis-720x470.jpg" alt="">
                                     <h5>Acropolis</h5>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="reviews">
-        <div class="container">
-            <div class="row">
-                <div class="title">
-                    <h2>OUR GUESTS LOVE US</h2>
-                    <p>What our guests are saying about us</p>
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <div class="item">
-                        <div class="top">
-                            <div class="review">
-                                <h5>Nice Place</h5>
-                                <div class="rating">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </div>
-                                <p>Fantastic location in a historic renovated monastery in the heart of the Castro. Staff were helpful and knowledgeable and everything in easy walking distance.</p>
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <img src="https://demo.zantetheme.com/wp-content/uploads/2018/02/user2.jpg" alt="">
-                            <div class="author">
-                                <h5>Ina Aldrich</h5>
-                                <p>Athens, Greece</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <div class="item">
-                        <div class="top">
-                            <div class="review">
-                                <h5>Perfect</h5>
-                                <div class="rating">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </div>
-                                <p>The owner and staff were extremely helpful and kind and took time to ensure that we had extra information on things to do in the area and places to visit.</p>
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <img src="https://demo.zantetheme.com/wp-content/uploads/2018/02/user1.jpg" alt="">
-                            <div class="author">
-                                <h5>John Doe</h5>
-                                <p>Rome, Italy</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <div class="item">
-                        <div class="top">
-                            <div class="review">
-                                <h5>Nice Place</h5>
-                                <div class="rating">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </div>
-                                <p>Fantastic location in a historic renovated monastery in the heart of the Castro. Staff were helpful and knowledgeable and everything in easy walking distance.</p>
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <img src="https://demo.zantetheme.com/wp-content/uploads/2018/02/user3.jpg" alt="">
-                            <div class="author">
-                                <h5>William W.</h5>
-                                <p>Lisbone, Portugal</p>
                             </div>
                         </div>
                     </div>

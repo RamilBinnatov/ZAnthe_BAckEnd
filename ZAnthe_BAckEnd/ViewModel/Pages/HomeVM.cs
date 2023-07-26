@@ -10,6 +10,8 @@
         public Models.ContactUs Contact { get; set; }
         public Models.Country country { get; set; }
         public Models.Poster poster { get; set; }
+        public IEnumerable<Models.Room> FavoriteRooms { get; set; }
+        public Models.Room FavoriteRoomSingle { get; set; }
 
 
     }

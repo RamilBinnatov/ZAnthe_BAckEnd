@@ -2,6 +2,7 @@
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using ZAnthe_BAckEnd.Data;
 using ZAnthe_BAckEnd.Models;
@@ -52,6 +53,13 @@ namespace ZAnthe_BAckEnd.Controllers
                 .Skip(1)
                 .Take(3)
                 .ToListAsync();
+            IEnumerable<Room> favoriteRooms = await _context.rooms.Where(m => !m.isDeleted)
+                .OrderByDescending(m => m.Price)
+                .Skip(1)
+                .Take (4)
+                .ToListAsync();
+            Room favoriteRoomSingle = await _context.rooms.Where(m => !m.isDeleted).OrderByDescending(m => m.Price).FirstOrDefaultAsync();
+
             Country country = await _context.countries.Where(m => !m.isDeleted).FirstOrDefaultAsync();
 
             HomeVM model = new HomeVM
@@ -62,7 +70,9 @@ namespace ZAnthe_BAckEnd.Controllers
                 services = services,
                 country = country,
                 countries = countries,
-                poster = posters,  
+                poster = posters,
+                FavoriteRooms=favoriteRooms,
+                FavoriteRoomSingle=favoriteRoomSingle
             };
 
 

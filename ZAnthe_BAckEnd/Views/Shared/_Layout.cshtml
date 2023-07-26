@@ -60,13 +60,11 @@
                         <div class="title">
                             <p>MENU</p>
                         </div>
-                        <a href="index.html"><span>Home</span></a>
+                        <a asp-controller="home" asp-action="index"><span>Home</span></a>
                         <div class="dropdown">
                             <span>Branches</span>
                             <div class="dropdown-content">
                                 <a asp-controller="room" asp-action="index">Zante Greece</a>
-                                <a href="branch.html">Zante Italy</a>
-                                <a href="branch.html">Zante UK</a>
                             </div>
                         </div>
                         <a href="rooms.html">Rooms</a>
@@ -81,7 +79,7 @@
                         }
 
                         <a href="about.html">About us</a>
-                        <a href="contact.html">Contact us</a>
+                        <a asp-controller="Contact" asp-action="index">Contact us</a>
                         <div class="book">
                             <a class="btn" href="book-online.html"><i class="fa fa-calendar" aria-hidden="true"></i></i><span>BOOK ONLINE</span></a>
                         </div>
@@ -94,18 +92,16 @@
             <div class="container">
                 <div class="row">
                     <div class="image col-lg-3">
-                        <a href="index.html">
+                        <a asp-controller="home" asp-action="index">
                             <img src="https://demo.zantetheme.com/wp-content/themes/zante/assets/images/logo.svg" alt="">
                         </a>
                     </div>
                     <div class="navbar col-lg-9">
-                        <a href="index.html">Home</a>
+                        <a asp-controller="home" asp-action="index">Home</a>
                         <div class="dropdown">
                             <span>Branches</span>
                             <div class="dropdown-content">
-                                <a href="branch.html">Zante Greece</a>
-                                <a href="branch.html">Zante Italy</a>
-                                <a href="branch.html">Zante UK</a>
+                                <a asp-controller="room" asp-action="index">Zante Greece</a>
                             </div>
                         </div>
                         <a asp-controller="room" asp-action="index">Rooms</a>
@@ -117,8 +113,8 @@
                         {
                             <a asp-controller="Account" asp-action="Register">Login/Register</a>
                         }
-                        <a asp-controller="About">About us</a>
-                        <a href="contact.html">Contact us</a>
+                        <a asp-controller="About" asp-action="index">About us</a>
+                        <a asp-controller="Contact" asp-action="index">Contact us</a>
                         <a class="btn" href="book-online.html"><i class="fa fa-calendar" aria-hidden="true"></i></i><span>BOOK ONLINE</span></a>
                     </div>
                 </div>
